@@ -60,7 +60,7 @@ def Initialize():
                 ircJoin(channel)
 
 def xkcdSummary(search_string, channel):
-'''Takes a number and outputs details about the xkcd comic'''
+        '''Takes a number and outputs details about the xkcd comic'''
 
         search_string = search_string.rstrip()
         curl_request = "curl -s https://xkcd.com/" + search_string + "/info.0.json"
@@ -73,7 +73,7 @@ def xkcdSummary(search_string, channel):
         ircMessage(message, channel)
 
 def rottenTomatoes(search_string, channel):
-'''Takes a string and outputs details from rotten tomatoes'''
+        '''Takes a string and outputs details from rotten tomatoes'''
 
         # Look up the json data from rotten tomatoes
         movie = RT().search(search_string, page_limit=1)
@@ -101,7 +101,7 @@ def rottenTomatoes(search_string, channel):
 
 
 def channelRequests(channel, data):
-'''Process all of the commands into the channel'''
+        '''Process all of the commands into the channel'''
 
         # !ping to see if the bot is alive
         if ircCKey + "ping" in data:
@@ -109,24 +109,12 @@ def channelRequests(channel, data):
 
         # !rt to search movie details
         if ircCKey + "rt" in data:
-            search_string = data[data.find("!rt ") + 4:]
-            rottenTomatoes(search_string, channel)
-
-        # !lookup to try and reverse a hostname into IP address
-        if ircCKey + "lookup" in data:
-                hostname = data.split(" ")
-                hostname = hostname[4]
-                try:
-                        hostname = hostname.strip("\r\n")
-                        ip = socket.gethostbyname(hostname)
-                        ircMessage(ip + ", " + hostname)
-                except:
-                        ircMessage("Failed to lookup: " + hostname, channel)
+                search_string = data[data.find("!rt ") + 4:]
+                rottenTomatoes(search_string, channel)
 
         # !testurl to see if a website is responding
         if ircCKey + "testurl" in data:
-                hostname = data.split(" ")
-                hostname = hostname[4]
+                hostname = data[data.find("!testurl ") + 9:]
                 try:
                         hostname = hostname.strip("\r\n")
                         request = urllib2.urlopen("http://isup.me/" + hostname)
