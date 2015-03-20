@@ -143,6 +143,10 @@ def channelRequests(channel, data):
                 search_string = data[data.find("xkcd.com/") + 9:]
                 xkcdSummary(search_string, channel)
 
+        # Per RFC 1149.5
+        if ircCKey + "random" in data:
+                ircMessage("4", channel)
+
 Initialize()
 
 while True:
